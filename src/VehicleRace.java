@@ -18,20 +18,31 @@ public class VehicleRace {
         System.out.println(car2);
         System.out.println("LET THE RACE BEGIN!");
         // Race until one car reaches the finish line
+        raceUntilFinish(car1, car2);
+
+        // Determine the winner
+        determineWinner(car1, car2);
+    }
+
+    public static void raceUntilFinish(Vehicle car1, Vehicle car2){
         while (car1.getDistanceTraveled() < DISTANCE_TO_FINISH && car2.getDistanceTraveled() < DISTANCE_TO_FINISH) {
             raceCars(car1, car2);
             pause(MILLIDELAY);
         }
+    }
 
-        // Determine the winner
+    public static void determineWinner(Vehicle car1, Vehicle car2){
         if (car1.getDistanceTraveled() >= DISTANCE_TO_FINISH &&
                 car1.getDistanceTraveled() > car2.getDistanceTraveled()) {
             System.out.println(car1.getBrand() + " won the race!");
-        } else {
+        } else if (car2.getDistanceTraveled() >= DISTANCE_TO_FINISH &&
+                car2.getDistanceTraveled() > car1.getDistanceTraveled()){
             System.out.println(car2.getBrand() + " won the race!");
+        } else if (car2.getDistanceTraveled() >= DISTANCE_TO_FINISH &&
+                car2.getDistanceTraveled() == car1.getDistanceTraveled()){
+            System.out.println("It's a tie!");
         }
     }
-
     public static int getRandomSpeed() {
         // Generate a random initial speed within the specified range
         return rand.nextInt(INITIAL_SPEED_MAX - INITIAL_SPEED_MIN + 1) + INITIAL_SPEED_MIN;
@@ -43,7 +54,7 @@ public class VehicleRace {
         int speed2 = car2.getSpeed();
 
         // Randomly vary the speeds slightly
-        speed1 += rand.nextInt(21) - 10; // Vary between -5 and 5
+        speed1 += rand.nextInt(21) - 10;
         speed2 += rand.nextInt(21) - 10;
 
         // Ensure speeds are positive
@@ -54,8 +65,8 @@ public class VehicleRace {
         car1.updateDistance(speed1);
         car2.updateDistance(speed2);
 
-        System.out.println(car1.getBrand() + " traveled at an average speed of " + speed1 + " and has moved " + car1.getDistanceTraveled() + " miles");
-        System.out.println(car2.getBrand() + " traveled at an average speed of " + speed2 + " and has moved " + car2.getDistanceTraveled() + " miles");
+        System.out.println(car1.getBrand() + " advanced at an average speed of " + speed1 + "mph and has traveled " + car1.getDistanceTraveled() + " miles");
+        System.out.println(car2.getBrand() + " advanced at an average speed of " + speed2 + "mph and has traveled " + car2.getDistanceTraveled() + " miles");
     }
 
     public static void pause(int millis){
