@@ -10,13 +10,13 @@ public class VehicleRace {
     public static void main(String[] args) {
         // Create two vehicles (cars) with initial speeds
         Vehicle car1 = new Vehicle("Toyota", getRandomSpeed());
-        Vehicle car2 = new Vehicle("Ford", getRandomSpeed());
+        Vehicle car2 = new Kart(getRandomSpeed());
 
         // Display initial information
         System.out.println("Initial Information:");
         System.out.println(car1);
         System.out.println(car2);
-        System.out.println("LET THE RACE BEGIN!");
+        System.out.println(ConsoleColors.GREEN + "LET THE RACE BEGIN!" + ConsoleColors.RESET);
         // Race until one car reaches the finish line
         raceUntilFinish(car1, car2);
 
@@ -57,6 +57,9 @@ public class VehicleRace {
         speed1 += rand.nextInt(21) - 10;
         speed2 += rand.nextInt(21) - 10;
 
+        speed1 = checkForKart(car2, car1, speed1);
+        speed2 = checkForKart(car1, car2, speed2);
+
         // Ensure speeds are positive
         speed1 = Math.max(speed1, 0);
         speed2 = Math.max(speed2, 0);
@@ -69,6 +72,17 @@ public class VehicleRace {
         System.out.println(car2.getBrand() + " advanced at an average speed of " + speed2 + "mph and has traveled " + car2.getDistanceTraveled() + " miles");
     }
 
+    public static int checkForKart(Vehicle carToBeChecked, Vehicle carToBeAttacked, int speed){
+        if(carToBeChecked instanceof Kart){
+            int origspeed = speed;
+            Kart k = (Kart) carToBeChecked;
+            SpecialItem s = k.detailedAttack();
+            speed -= s.getDelay();
+            System.out.println(s.getTextColor() + "The " + k.getBrand() + " slowed " + carToBeAttacked.getBrand() + " by " +
+                    s.getDelay() + " with a " + s.getItem() + " reducing the speed of " + origspeed + "mph to " + speed + "mph" + ConsoleColors.RESET);
+        }
+        return speed;
+    }
     public static void pause(int millis){
         //need a try catch because the sleep method can throw an exception.
         //java will not compile if you do not handle a method that declares it may throw and exception.
