@@ -3,6 +3,8 @@ class Vehicle {
     private int speed;
     private int distanceTraveled;
 
+    private int currentLapSpeed;
+
     public Vehicle(String brand, int speed) {
         this.brand = brand;
         this.speed = speed;
@@ -24,6 +26,14 @@ class Vehicle {
     public void updateDistance(int speed) {
         // Update the distance traveled based on speed
         distanceTraveled += speed;
+    }
+
+    public int getCurrentLapSpeed() {
+        return currentLapSpeed;
+    }
+
+    public void setCurrentLapSpeed(int currentLapSpeed) {
+        this.currentLapSpeed = currentLapSpeed;
     }
 
     @Override
